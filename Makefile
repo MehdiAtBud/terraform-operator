@@ -1,5 +1,5 @@
 PKG ?= github.com/isaaguilar/terraform-operator
-DOCKER_REPO ?= isaaguilar
+DOCKER_REPO ?= msouihed
 IMAGE_NAME ?= terraform-operator
 DEPLOYMENT ?= ${IMAGE_NAME}
 NAMESPACE ?= tf-system

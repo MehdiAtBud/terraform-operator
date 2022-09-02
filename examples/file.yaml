@@ -1,0 +1,31 @@
+apiVersion: tf.isaaguilar.com/v1alpha1
+kind: Terraform
+metadata:
+  name: hello-tfo-10
+  namespace: tf-system
+spec:
+  serviceAccount: terraform-operator-runners
+  terraformModuleInline: |-
+    resource "google_storage_bucket" "static-site" {
+      name          = "my-bud-tf-k8-bucket-test"
+      location      = "EU"
+      force_destroy = true
+      uniform_bucket_level_access = true
+      project = "experimental-project-191516"
+    }
+
+  name : my-bud-tf-k8-bucket-test
+  customBackend: |-
+    terraform {
+      backend "kubernetes" {
+        secret_suffix    = "hello-tfo"
+        in_cluster_config  = true
+      }
+    }
+
+  keepCompletedPods: true
+  credentials:
+    - secretNameRef:
+        name: gcp-token
+        namespace: tf-system
+        key: GOOGLE_CLOUD_KEYFILE_JSON
